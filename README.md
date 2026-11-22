@@ -1,49 +1,31 @@
-# Fleureve Planner ♡ — Edisi finalisasi lokal (21 November 2026)
+# Fleureve Planner ♡ — RELEASE
 
-> **Local-only, offline-first. Tanpa akun, tanpa cloud-sync, tanpa CDN.**
-> Proyek ini dilanjutkan dari **Fleureve-Planner(4).zip** milik pengguna, bukan dibuat ulang.
+Paket ini melanjutkan Fleureve-Planner-FINAL.zip. Fleureve menyimpan Work Space dan Personal Space secara terpisah di browser. Keduanya dapat dipakai offline setelah aset pertama kali dimuat. Akun dan layanan sinkronisasi tidak diperlukan.
 
-## Instalasi
-1. Ekstrak ZIP. Unggah **isi folder aplikasi** ke root repo GitHub Pages (mis. `fleureve-planner`).
-2. GitHub → Settings → Pages → Deploy from branch → `main` / root.
-3. Buka URL Pages `https://USERNAME.github.io/fleureve-planner/` di Safari iPhone, kemudian Share → Add to Home Screen. Di Windows, gunakan Install dari Edge/Chrome.
-4. **Buka online sekali dan tunggu caching selesai**, lalu coba tutup internet dan muat ulang. Jangan memakai `file://` untuk menguji PWA.
-5. Ekspor backup JSON masing-masing Work/Personal di Settings sebelum dan sesudah pembaruan.
+## Meninjau dan memasang
 
-**Penting:** data tersimpan di IndexedDB berdasarkan *origin dan path aplikasi*. Jangan hapus data situs, uninstall aplikasi, atau mengganti origin tanpa mencadangkan data. GitHub Pages hanya meng-host kode publik, bukan data tugasmu.
+1. Ekstrak ZIP. Untuk uji coba, jalankan folder tersebut melalui localhost HTTP atau HTTPS. Buka aplikasi sekali saat online agar service worker bisa menyimpan aset.
+2. Dari versi yang sedang dipakai, buka **Settings → Export JSON backup** di Work dan Personal. Simpan kedua file di luar browser.
+3. Setelah ditinjau, tempatkan file aplikasi pada alamat Planner yang sama. Tutup lalu buka kembali hingga aplikasi memakai versi baru. Pengujian perangkat tersedia di TESTING.md.
+4. Di iPhone, buka alamat HTTPS melalui Safari lalu pilih Share → Add to Home Screen. Pemasangan ini perlu diuji di perangkat Anda.
 
-## Ringkasan isi
-- Work: quick-add, To-Do, subtugas, reschedule dengan riwayat, proyek, fase, milestone, Gantt/timeline, dependensi ganda dengan pencegahan siklus, manual pin fokus, impor multiline/WhatsApp, complete log, reminder ketika aktif.
-- Personal: Sticker Calendar terintegrasi, shopping basket, wishlist, Gentle Routines, little wins, habit/mood, reminder.
-- Prayer Corner: zona waktu berbasis lokasi, 13 titik bawaan termasuk Waisai dan *pusat Pulau Misool (perkiraan)*, lokasi tersimpan dengan koordinat pengguna, pilihan GPS + **konfirmasi zona waktu**, countdown, checklist/riwayat, reminder in-app + snooze. **Jadwal merupakan estimasi astronomis lokal yang belum tervalidasi terhadap jadwal resmi Kemenag**, bukan pengganti referensi resmi.
-- Reflection: 8 kutipan pendek yang diperiksa terhadap sumber terkait (7 ayat pendek, 1 kutipan hadis sahih) dan disimpan lokal untuk offline; Today’s Reflection, Another Reflection, Favorites, tautan sumber.
-- Lima tema coquette/vintage + Soft Sage Garden di Prayer Corner, **215 Daily Little Notes unik**.
-- Backup per ruang, Merge/Replace dengan preview dan konfirmasi eksplisit, ekspor tugas dan reminder `.ics`, PWA offline-first.
+IndexedDB tetap **versi 6**, backup JSON tetap **format 4**, dan nama cache RELEASE diakhiri dengan **v9d-release-verification**. Restore **Merge** mempertahankan data tambahan dan memilih versi yang lebih baru untuk ID yang sama. **Replace** mengganti isi ruang aktif dan meminta konfirmasi REPLACE. Backup Personal mencakup prayerSchedules. Bila berpindah origin, browser, atau perangkat, pulihkan kedua ruang secara terpisah dari backup.
 
-## Cara mengamankan dan memulihkan data
-- Work dan Personal **berada di database terpisah**. Backup kedua ruang secara terpisah.
-- **Export JSON** menyimpan semua object store versi 4 (termasuk Favorites, pengingat, jadwal GPS pada `prefs`).
-- **Import JSON**: pilih file dan pastikan ruang sama → pratinjau jumlah catatan tiap kategori → **Merge** untuk menggabungkan record berdasarkan ID dan `updatedAt`, atau **Replace** untuk mengganti keseluruhan data pada ruang tersebut. Untuk Replace, wajib ketik `REPLACE`.
-- Import mendukung format backup versi sebelumnya selama ruang cocok, tetapi backup versi lebih baru tidak diimpor oleh aplikasi versi lama. Proses pemulihan memakai satu transaksi IndexedDB lintas-store agar tidak meninggalkan pemulihan separuh jalan.
-- Sebelum mencoba Replace, simpan **backup lain** di luar aplikasi (mis. Files/iCloud Drive). Tidak ada backup otomatis.
+## Reminder
 
-## Jadwal shalat dan lokasi
-- Waisai: titik kota dari OSM/Mapcarta (sekitar -0.42108, 130.82295). *Misool Island (approx.)*: pusat pulau dari GeoNames/Mapcarta (sekitar -1.86667, 130.16667). Untuk distrik/kampung tertentu (Lilinta, Fafanlap, dst.), tambahkan **Saved location** sesuai koordinat setempat. Waisai dan Misool jelas **tidak menggunakan jadwal yang identik**.
-- Pilihan GPS **tidak lagi menganggap timezone perangkat pasti benar**. Aplikasi menawarkan nilai awal berdasarkan bujur secara kasar, tetapi pengguna diminta mengonfirmasi 7=WIB/8=WITA/9=WIT sebelum jadwal aktif. Ini bukan deteksi zona waktu administratif sempurna untuk setiap koordinat.
-- Perhitungan offline: Subuh -20°, Isya -18°, Asar standar, penambahan 3 menit. **Belum dibuktikan identik** dengan metode atau jadwal resmi Kemenag untuk daerah/tempat/tanggal tertentu. Untuk ibadah, cek jadwal masjid/lokal/SIHAT: https://sihat.kemenag.go.id/jadwal-salat. Tautan membuka situs resmi saat ada internet; data resmi **tidak** otomatis diunduh atau disimpan sebagai kalender offline karena akses data mentah membutuhkan mekanisme berizin.
-- Reminder hanya aktif bila aplikasi berjalan dan browser mengizinkan; timer/audio dapat dibekukan di iPhone, terutama saat app tidak di depan. **Jangan bergantung pada PWA sebagai satu-satunya alarm shalat.**
+- **Edit Task** memuat semua pengingat relatif yang sudah tersimpan, berikut acuan tanggal, hari sebelum, dan jam. Pilih **Add another relative reminder** untuk menambah aturan lain. Pilih **none** pada suatu aturan lalu simpan untuk menghapus aturan tersebut. Kombinasi acuan dan offset yang sama hanya dapat dipakai sekali.
+- Reminder relatif mengikuti deadline, start date, atau planned date yang dipilih. Mengosongkan tanggal acuan menonaktifkan reminder tersebut hingga tanggal tersedia. Reminder tetap memakai tanggal/jam yang ditetapkan, dan Snooze berlaku tanpa menggeser resep jadwalnya. Perubahan jadwal relatif yang efektif menggantikan waktu bunyi sebelumnya.
+- **Work → Projects → Set reminder** menawarkan Hari H, H-1, H-3, H-7, No Reminder, atau tanggal dan waktu khusus. Perubahan tanggal pada milestone yang sama memperbarui reminder relatif. Penghapusan task atau milestone turut membersihkan reminder yang terhubung.
+- **Personal → Lists** memakai General Checklist atau Shopping List, dengan tanggal dan catatan opsional. Urutan item tersimpan. Reset checklist mengosongkan centang sambil mempertahankan item dan urutannya.
 
-## Sumber kutipan agama (diperiksa 21-11-2026)
-- Al-Qur'an Digital — Ditjen Bimas Islam Kemenag: https://simbi.kemenag.go.id/al-quran/asy-syarh ; https://simbi.kemenag.go.id/al-quran/ad-duha ; https://simbi.kemenag.go.id/al-quran/al-asr
-- HaditsMU Universitas Muhammadiyah Yogyakarta: https://islammu.umy.ac.id/haditsmu/1/3705/ (kutipan pendek hadis Sahih Bukhari 3705 menurut penomoran katalog UMY).
-- Koleksi tersedia offline sebagai **kutipan pendek** dengan rujukan dan nama penerbit, bukan generator kutipan. Beberapa terjemahan mungkin tunduk pada syarat hak cipta penerbit; periksa izin sebelum mendistribusikan ulang secara luas.
+## Prayer Corner
 
-## Pengujian dan keterbatasan
-- **Lulus:** pemeriksaan sintaks seluruh JavaScript (`node --check`), uji fungsi murni di Node untuk konversi lokasi/tanggal/jam, perbedaan jadwal Sorong-Waisai-Misool, kalender stiker, koleksi 215 catatan, kutipan dan sumber, struktur Prayer Corner.
-- **Belum teruji penuh di sini:** instalasi PWA, migrasi dengan data asli, backup/restore pada Chromium, audio/snooze pada Safari iPhone, timezone lokasi GPS nyata, jadwal dibanding sumber resmi untuk berbagai daerah dan tanggal.
-- Browser Chromium pada lingkungan penyusunan ini memiliki kebijakan pengelola yang **memblokir navigasi ke seluruh URL**, termasuk alamat lokal. Oleh karena itu pengujian UI end-to-end tidak bisa dijalankan dari sini; jangan menganggap hasil uji Node sebagai bukti seluruh tombol/fitur benar di iPhone/Windows. Gunakan daftar uji pada `TESTING.md` sebelum memasukkan data penting atau mengganti aplikasi aktif.
+1. Di panel **Official Live Schedule — Kemenag SIHAT**, pilih Provinsi lalu Kabupaten/Kota. Wilayah aktif tersimpan setelah reload.
+2. Untuk enam wilayah terverifikasi, pilih **Open official schedule … on SIHAT**. Tautan langsung membawa Anda ke jadwal resmi wilayah aktif. Uji 22 November 2026 mendapati header SAMEORIGIN pada keenam URL, sehingga halaman Planner yang berbeda origin memakai tab resmi SIHAT. Dokumen widget: https://sihat.kemenag.go.id/widget.
+3. Bila pemetaan otomatis belum diverifikasi, pilih wilayah pada halaman widget resmi SIHAT, salin URL widget, dan simpan pada kolom URL untuk wilayah tersebut. Tautan tersimpan per lokasi. Pastikan nama wilayah pada halaman resmi cocok dengan pilihan di Fleureve.
+4. **Fleureve Prayer Times** memakai CSV yang cocok dengan lokasi, zona waktu, dan tanggal. Jika tidak ada, Fleureve hanya menghitung jadwal lokal untuk koordinat valid. Kabupaten/kota tanpa koordinat atau CSV menampilkan status jadwal belum tersedia. Perhitungan lokal tidak tervalidasi sebagai jadwal resmi. Jam di widget online tidak dimasukkan ke countdown, alarm, atau cache offline.
+5. **Import schedule (CSV)** menerima file CSV atau teks yang ditempel. Template menggunakan Date,Subuh,Zuhur,Asar,Magrib,Isya dengan format YYYY-MM-DD dan HH:MM. Tinjau lokasi, zona waktu, tanggal, dan bulan yang akan diganti sebelum menyimpan. Sumber selalu diberi label **Imported Schedule — User Provided**. Hapus jadwal impor dari panel waktu internal untuk kembali ke sumber yang tersedia.
+6. Alarm mengikuti waktu internal aktif dan sakelar masing-masing shalat. Snooze dari lokasi atau jadwal yang sudah berubah dibatalkan. Suara bergantung pada pengaturan browser; PWA memerlukan aplikasi tetap berjalan dan tidak menjamin alarm saat perangkat terkunci atau aplikasi tertutup.
+7. **Settings → Export dated tasks (.ics)** mendukung pilihan shalat, 7/14/30 hari, zona waktu lokasi, dan alarm opsional. Hanya tanggal yang memiliki jadwal internal valid masuk ke file. Impor file itu ke kalender perangkat secara manual; perubahan di Fleureve tidak memperbarui kalender perangkat.
 
-## Catatan pembaruan (migrasi)
-- Kedua database IndexedDB (Work dan Personal) dinaikkan dari versi 3 ke versi 4 tanpa menghapus store lama. `reflectionFavorites` ditambahkan ke Personal dengan `onupgradeneeded`, dan seluruh object store lama dipertahankan.
-- `sw.js` berganti versi cache agar file `reflections.js` ikut disimpan untuk offline. Cache browser lama mungkin memerlukan hard reload sekali pada update pertama.
-- Aplikasi tidak melakukan sync antar perangkat. Future Work-only Sync **belum diimplementasikan** dan tetap memerlukan desain migrasi dan keamanan tersendiri.
+Lihat TESTING.md untuk hasil terbaru, batasan, dan tangkapan layar di folder qa-screenshots.
