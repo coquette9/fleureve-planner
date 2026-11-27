@@ -82,3 +82,15 @@
 - .ics export dialog: choose dated items, reminders (VALARM) and, in Personal, prayer times (range, prayers, alarm) with VTIMEZONE (WIB/WITA/WIT); unique UIDs.
 - Visual: every internal page has its own stationery layout (planner paper, project journal tabs, dotted timeline grid, ribbon accomplishment tags, petal calendar cells, dotted-tape lists, diary routines, tilted mood journal, arched sage Prayer cards). Uses theme variables + existing SVG ornaments.
 - NOT done: Daily List date/note/manual ordering/shopping-only fields; milestone-linked reminders; reminders do not follow task date changes automatically.
+
+# RELEASE Update — completed items sink to the bottom
+- Checked items move to the bottom of their own list; the newest completion is lowest. Unchecking returns the item to the open group in its saved manual order.
+- Applies to: Personal Daily Lists (General Checklist and Shopping List), Today's Little Plans (now also shows today's completed plans at the bottom, struck through), and task lists inside Work Projects/phases. Work Tasks, Work Home agenda and the Done page keep their previous behaviour.
+- ↑/↓ now swaps only open items; completed items' arrows are disabled. New optional field `doneAt` (ms) records completion order; no schema or backup-format change (IndexedDB 6, backup format 4). Reset Checklist clears it.
+- Today's Little Plans open items are ordered by creation time. No CSS, icon, theme or layout change. Cache name: v9d-release-autosort.
+
+# RELEASE Update — Final
+1. Personal Home → Today's Little Plans: completed plans now show ✓ (filled checkbox), a struck-through softened title, stay below open plans, can be unchecked, and keep state/order after reload. (The earlier completed-row markup had been applied to the Work Home agenda by mistake; that is restored to the original.)
+2. Daily Lists manual order: ↑/↓ now works on old lists whose items have no `position` — positions are written for every item in the order currently shown, then only the two open neighbours swap, so other items are never shuffled. Uncheck returns an item to its manual place; Reset Checklist restores manual order and keeps all items.
+3. Personal → Routines: compact routine cards (icon, name, interval, Last done, Next, ⋯). ⋯ opens Edit Routine / View History / Delete Routine (explicit confirmation). Removed from the page only: Maybe Today, Not Today, Done!, date input, Log on that date, large Edit, always-open history. Recording stays in the Calendar (and the Home widget), unchanged.
+Files changed: app.js, style.css (rules appended, scoped to the Routines page and the ⋯ menu; existing rules untouched), sw.js (cache v9d-release-final). No schema, backup-format, Home, theme, icon or navigation change.

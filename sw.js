@@ -1,6 +1,6 @@
 const scope=self.registration.scope;
 const prefix='fleureve:'+scope+':';
-const version=prefix+'v9d-release-verification';
+const version=prefix+'v9d-release-final';
 const assets=['./','index.html','style.css','app.js','wilayah.js','reflections.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/icon-180.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(version).then(cache=>cache.addAll(assets.map(asset=>new Request(new URL(asset,scope),{cache:'reload'})))).then(()=>self.skipWaiting()));

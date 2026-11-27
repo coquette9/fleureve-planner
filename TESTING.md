@@ -48,3 +48,14 @@ Folder qa-screenshots berisi pembanding Home Work/Personal V9d dan RELEASE denga
 2. Buat task H-3, ubah deadline dan cek **Settings → Reminders**. Set reminder milestone dan ulangi. Tambah dua item Daily Lists, ubah urutan, reload, lalu Reset.
 3. Pilih Kota Sorong lalu Kabupaten Sorong dan buka tautan resmi masing-masing. Pastikan nama wilayah benar. Uji CSV dan cek sumber yang tertulis sebelum mengandalkan countdown.
 4. Buka versi HTTPS di Safari, muat online sekali, uji mode pesawat, lalu sambungkan kembali. Uji alarm saat aplikasi terbuka dan impor .ics pada kalender perangkat jika ingin memakainya.
+
+## Auto-sort completed items (Chromium emulation, 390x844 and 1366x900)
+PASS (General Checklist and Shopping List, 3 items each): check first -> bottom; second -> below first; uncheck -> back among open items; manual ↑ then check works together; completed arrows disabled; order persists after reload; progress 33%; Reset unchecks all and keeps items.
+PASS: Today's Little Plans (3 plans); Work project list (3 tasks); backup contains doneAt, Merge restore keeps order; Done page unchanged; no JS errors.
+Design: style.css, icons and layouts byte-identical to the previous RELEASE. Not tested: Safari iPhone/Windows, Replace-restore, 5-theme visual re-check.
+
+# Final update tests (Chromium emulation; iPhone 390x844, desktop 1366x900) — 35 checks PASS, 0 JS errors
+Plans: ✓ + strike-through + filled checkbox, order, uncheck, reload.
+Legacy list (4 items without position, ids not in creation order): ↑ and ↓ swap only the chosen pair, order persists after reload, check/uncheck/Reset keep manual order and all 4 items.
+Routines: create 5, edit name/icon/interval keeps history, Show on Calendar No/Yes hides/shows icon, log today + past date from Calendar with no duplicates, tap again undoes with confirmation, Last done / Next correct, View History, Delete cancel and confirm, Home widget unchanged and still logging once, backup contains routines/logs/positions, Merge restore creates no duplicates, no horizontal overflow in 5 themes (mobile) and desktop, 5 cards visible on iPhone without scrolling, ⋯ target 44x44.
+Not tested: Safari iPhone / Windows devices, Replace-restore, visual inspection of all 5 theme screenshots by eye (only Strawberry reviewed).
